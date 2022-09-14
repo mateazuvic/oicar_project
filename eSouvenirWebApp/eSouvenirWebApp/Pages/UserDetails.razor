@@ -1,0 +1,65 @@
+﻿@page "/userDetails"
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+
+<h1>Users details</h1>
+
+<RadzenGrid  AllowPaging="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+            PageSize="5" AllowSorting="true" Data="@Users" ColumnWidth="150px">
+    <Columns>
+        <RadzenGridColumn TItem="Models.User" Property="IDUser" Title="ID"  Width="30px"></RadzenGridColumn>
+        <RadzenGridColumn TItem="Models.User" Property="Username" Title="Username"></RadzenGridColumn>
+        <RadzenGridColumn TItem="Models.User" Property="Email" Title="Email"></RadzenGridColumn>
+        <RadzenGridColumn TItem="Models.User" Property="PassString" Title="Pasword"></RadzenGridColumn>
+        <RadzenGridColumn TItem="Models.User" Property="IsAdmin" Title="IsAdmin"></RadzenGridColumn>
+        <RadzenGridColumn TItem="Models.User" Property="IsDeleted" Title="IsDeleted"></RadzenGridColumn>
+        <RadzenGridColumn TItem="Models.User" Title="Remove user" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+            <Template Context="user">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete_forever" Size="ButtonSize.Small" Class="m-1" Click="@(args => RemoveUser(user))" @onclick:stopPropagation="true"></RadzenButton>
+            </Template>
+        </RadzenGridColumn>
+
+    </Columns>
+
+</RadzenGrid>
+
+@code {
+
+
+
+    private List<Models.User> Users = new List<Models.User>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Users.Add(new Models.User("user9", "user9@mail.com", new byte[] { }, false));
+
+        //await Http.GetFromJsonAsync<List<Models.User>>("api/Users/get");
+        Users = await Http.GetFromJsonAsync<List<Models.User>>("api/Users/get");
+
+        foreach (var item in Users)
+        {
+            item.PassString = ConvertByteToString(item.Pass);
+        }
+    }
+
+    private string ConvertByteToString(byte[] bytes)
+    {
+        return BitConverter.ToString(bytes).Replace("-", String.Empty);
+    }
+
+    async Task RemoveUser(Models.User user)
+    {
+
+        await JsRuntime.InvokeVoidAsync("alert", "Warning!"); // Alert
+
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
+        if (confirmed)
+        {
+            await Http.PostAsJsonAsync("api/Users/updateUser", user);
+            await OnInitializedAsync();
+
+        }
+
+    }
+
+}

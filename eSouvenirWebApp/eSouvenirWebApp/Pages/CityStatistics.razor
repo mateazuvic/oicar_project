@@ -1,0 +1,117 @@
+﻿@page "/cityStatistics"
+@inject HttpClient Http
+
+
+
+<h1>Cities Statistics</h1>
+
+<table class="table">
+    <tr>
+        <td class="col-md-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-6 offset-lg-3 my-5">
+                        <p>Number of QR codes by cities:</p>
+                        <RadzenChart>
+                            <RadzenDonutSeries Data="@Cities" CategoryProperty="Name" ValueProperty="NbrOfQrCodes">
+                                <TitleTemplate>
+                                    <div class="rz-donut-content">
+                                        <div>Number of QR codes</div>
+                                        <div>by cities</div>
+                                    </div>
+                                </TitleTemplate>
+                            </RadzenDonutSeries>
+                        </RadzenChart>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="col-md-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-6 offset-lg-3 my-5">
+                        <p>Number of users by cities:</p>
+                        <RadzenChart>
+                            <RadzenDonutSeries Data="@Cities" CategoryProperty="Name" ValueProperty="NbrOfUsers">
+                                <TitleTemplate>
+                                    <div class="rz-donut-content">
+                                        <div>Number of users</div>
+                                        <div>by cities</div>
+                                    </div>
+                                </TitleTemplate>
+                            </RadzenDonutSeries>
+                        </RadzenChart>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    
+</table>
+    
+    
+    
+
+   
+
+
+    @code {
+
+        private List<Models.QRCode> Qrcodes = new List<Models.QRCode>();
+        private List<Models.City> Cities = new List<Models.City>();
+
+
+        private List<Models.User> Users = new List<Models.User>();
+
+        protected override async Task OnInitializedAsync()
+        {
+            Qrcodes = await Http.GetFromJsonAsync<List<Models.QRCode>>("api/QRCode/Get");
+            Cities = await Http.GetFromJsonAsync<List<Models.City>>("api/Cities/Get");
+
+
+            Users = await Http.GetFromJsonAsync<List<Models.User>>("api/Users/Get");
+
+
+            CountUsers();
+
+            CountQrCodes();
+        }
+
+
+        private void CountQrCodes()
+        {
+            foreach (var city in Cities)
+            {
+
+                foreach (var qr in Qrcodes)
+                {
+                    if (city.IDCity == qr.CityID)
+                    {
+                        city.NbrOfQrCodes++;
+                    }
+                }
+            }
+        }
+
+
+        private void CountUsers()
+        {
+            foreach (var city in Cities)
+            {
+                foreach (var user in Users)
+                {
+                    foreach (var qr in Qrcodes)
+                    {
+                        if (user.IDUser == qr.UserID && city.IDCity == qr.CityID)
+                        {
+                            city.NbrOfUsers++;
+                            break;
+
+                        }
+                    }
+                }
+            }
+        }
+
+    }

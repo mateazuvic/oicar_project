@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="878eaf0e7d42488fab67e01794694507" Name="Diagram1">
+        <EntityTypeShape EntityType="oicartim04dbModel.AccomodationItem" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="oicartim04dbModel.City" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="oicartim04dbModel.GeoLocation" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="oicartim04dbModel.Picture" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="oicartim04dbModel.PopularLocationItem" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="oicartim04dbModel.QRCode" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="oicartim04dbModel.User" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="oicartim04dbModel.WalletItem" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <AssociationConnector Association="oicartim04dbModel.FK_AccomodationItem_QRCode" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_Pitcure_AccomodationItem" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_Geo_City" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_QRCode_City" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_PopularLocationItem_GeoLocation" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_Pitcure_PopularLocationItem" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_Pitcure_WalletItem" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_PopularLocationItem_QRCode" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_QRCode_User" ManuallyRouted="false" />
+        <AssociationConnector Association="oicartim04dbModel.FK_WalletItem_QRCode" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,96 @@
+﻿@page "/login"
+@inject HttpClient Http
+@inject AppState AppState
+@inject NavigationManager NavigationManager
+@using System.Security.Cryptography
+@using System.Text
+<h3>LogIn</h3>
+
+<div class="p-3">
+    <div class="col-md-3">
+        <label class="form-label">Username</label>
+        <input class="form-control" @bind="Username" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" @bind="Password" />
+    </div>
+    <div class="col-md-3">
+        <p style="color:@color"><b>@text</b></p>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-success" @onclick="Submit">Submit</button>
+    </div>
+
+</div>
+
+
+
+@code {
+    private string Username { get; set; }
+    private string Password { get; set; }
+    public Models.UserLogin UserToLogin { get; set; }
+
+    string color = "black";
+    string text = "Please insert username and password!";
+
+    private async void Submit()
+    {
+
+        if (Username != null && Password != null)
+        {
+
+            Models.UserLogin user = new Models.UserLogin(Username, null, Password, true, false);
+
+            //text = "Loading...";
+            var response = await Http.PostAsJsonAsync("api/Login/LoginAdmin", user);
+            Console.WriteLine(response);
+            Console.WriteLine(response.Content);
+            Console.WriteLine(response.StatusCode);
+
+
+
+            var id = response.Content.ReadFromJsonAsync<int>().Result;
+
+            if (id < 1)
+            {
+                color = "red";
+                text = "Incorect username or password!";
+                StateHasChanged();
+            }
+            else
+            {
+                color = "green";
+                text = "Welcome " + Username + "!";
+                StateHasChanged();
+                AppState.LoggedIn = true;
+                NavigationManager.NavigateTo("userDetails");
+
+            }
+        }
+        else if (Username == null || Password == null)
+        {
+
+            color = "red";
+            text = "All fields are required!";
+            StateHasChanged();
+
+        }
+
+
+    }
+
+    private byte[] ConvertToHash(string pass)
+    {
+        using (SHA512 sha512Hash = SHA512.Create())
+        {
+            //From String to byte array
+            byte[] bytes = sha512Hash.ComputeHash(Encoding.UTF8.GetBytes(pass));
+            string hash = BitConverter.ToString(bytes).Replace("-", String.Empty);
+
+            Console.WriteLine("The SHA512 hash of " + pass + " is: " + hash);
+            return bytes;
+        }
+
+    }
+}

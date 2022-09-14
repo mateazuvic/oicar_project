@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/back"
+    tools:context=".MainActivity">
+
+
+
+     <ImageView
+         android:layout_width="wrap_content"
+         android:layout_height="0dp"
+         android:layout_weight="3"
+         android:src="@drawable/travel_back"
+        />
+
+    <TextView
+        android:id="@+id/tvMain"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="90dp"
+        android:textSize="80dp"
+        android:textColor="@color/redColor"
+        android:fontFamily="@font/classy"
+        android:text="eSouvenir"
+        android:shadowColor="@color/redColor"
+        android:shadowDx="-4"
+        android:shadowDy="-4"
+        android:shadowRadius="1"/>
+
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="14dp"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="4dp"
+        android:textColor="#373b3a"
+        android:text="Collect your travel memories and put them in one place, a place where they last forever..."/>
+
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:trackColor="@color/redColor"
+        app:indicatorColor="@color/darkOrange"
+        android:max="100"
+        android:progress="0"/>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/oicartim04dbserver/databases/oicartim04db",
+      "type": "mssql.azure",
+      "connectionId": "Server=tcp:oicartim04dbserver.database.windows.net,1433;InitialCatalog=oicartim04db;PersistSecurityInfo=False;UserID=matea;Password=OvoJeJak0DobarPa$$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

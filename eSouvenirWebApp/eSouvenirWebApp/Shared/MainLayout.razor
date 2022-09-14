@@ -1,0 +1,59 @@
+﻿@inherits LayoutComponentBase
+@inject AppState AppState
+@inject NavigationManager NavigationManager
+
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+        <div class="top-row px-4">
+
+            <p target="_blank" style="margin-right:740px; margin-top:16px;" class="ml-md-auto">OICAR-Tim04-2022</p>
+            <style>
+                .top-row {
+                    color: white;
+                    font-size: large;
+                    font-weight: bold;
+                    background: rgb(118,9,121);
+                    background: linear-gradient(90deg, rgba(118,9,121,0.9475140397956058) 13%, rgba(32,0,141,1) 60%);
+                }
+            </style>
+            @if (AppState.LoggedIn == true)
+            {
+                <p style="margin-left: 20px">
+                    <button class="btn btn-danger" style="margin-top:16px;" @onclick="@(args => LogoutUser())">
+                        Logout
+                    </button>
+                </p>
+            }
+
+
+        </div>
+
+        <div class="content px-4">
+            @Body
+
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += StateHasChanged;
+    }
+
+    private void LogoutUser()
+    {
+        AppState.LoggedIn = false;
+        NavigationManager.NavigateTo("login");
+
+    }
+
+}
+

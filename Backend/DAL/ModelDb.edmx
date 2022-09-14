@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="oicartim04dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccomodationItem">
+          <Key>
+            <PropertyRef Name="IDAccomodationItem" />
+          </Key>
+          <Property Name="IDAccomodationItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Link" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="QRCodeID" Type="int" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="IDCity" />
+          </Key>
+          <Property Name="IDCity" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="GeoLocation">
+          <Key>
+            <PropertyRef Name="IDGeoLocation" />
+          </Key>
+          <Property Name="IDGeoLocation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PositionX" Type="decimal" Precision="14" Scale="12" Nullable="false" />
+          <Property Name="PositionY" Type="decimal" Precision="17" Scale="15" Nullable="false" />
+          <Property Name="CityID" Type="int" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="IDPicture" />
+          </Key>
+          <Property Name="IDPicture" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="10" />
+          <Property Name="Content" Type="varbinary(max)" />
+          <Property Name="PicturePath" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccomodationID" Type="int" />
+          <Property Name="PopularLocationID" Type="int" />
+          <Property Name="WalletID" Type="int" />
+        </EntityType>
+        <EntityType Name="PopularLocationItem">
+          <Key>
+            <PropertyRef Name="IDPopularLocationItem" />
+          </Key>
+          <Property Name="IDPopularLocationItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="GeoLocationID" Type="int" />
+          <Property Name="QRCodeID" Type="int" />
+          <Property Name="IsVisited" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRCode">
+          <Key>
+            <PropertyRef Name="IDQRCode" />
+          </Key>
+          <Property Name="IDQRCode" Type="int" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="CityID" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Pass" Type="binary" MaxLength="64" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WalletItem">
+          <Key>
+            <PropertyRef Name="IDWalletItem" />
+          </Key>
+          <Property Name="IDWalletItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="Price" Type="money" />
+          <Property Name="QRCodeID" Type="int" />
+        </EntityType>
+        <Association Name="FK_AccomodationItem_QRCode">
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="0..1" />
+          <End Role="AccomodationItem" Type="Self.AccomodationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRCode">
+              <PropertyRef Name="IDQRCode" />
+            </Principal>
+            <Dependent Role="AccomodationItem">
+              <PropertyRef Name="QRCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Geo_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="GeoLocation" Type="Self.GeoLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="IDCity" />
+            </Principal>
+            <Dependent Role="GeoLocation">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pitcure_AccomodationItem">
+          <End Role="AccomodationItem" Type="Self.AccomodationItem" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccomodationItem">
+              <PropertyRef Name="IDAccomodationItem" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="AccomodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pitcure_PopularLocationItem">
+          <End Role="PopularLocationItem" Type="Self.PopularLocationItem" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PopularLocationItem">
+              <PropertyRef Name="IDPopularLocationItem" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="PopularLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pitcure_WalletItem">
+          <End Role="WalletItem" Type="Self.WalletItem" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WalletItem">
+              <PropertyRef Name="IDWalletItem" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="WalletID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PopularLocationItem_GeoLocation">
+          <End Role="GeoLocation" Type="Self.GeoLocation" Multiplicity="0..1" />
+          <End Role="PopularLocationItem" Type="Self.PopularLocationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeoLocation">
+              <PropertyRef Name="IDGeoLocation" />
+            </Principal>
+            <Dependent Role="PopularLocationItem">
+              <PropertyRef Name="GeoLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PopularLocationItem_QRCode">
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="0..1" />
+          <End Role="PopularLocationItem" Type="Self.PopularLocationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRCode">
+              <PropertyRef Name="IDQRCode" />
+            </Principal>
+            <Dependent Role="PopularLocationItem">
+              <PropertyRef Name="QRCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRCode_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="IDCity" />
+            </Principal>
+            <Dependent Role="QRCode">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRCode_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="QRCode">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WalletItem_QRCode">
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="0..1" />
+          <End Role="WalletItem" Type="Self.WalletItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRCode">
+              <PropertyRef Name="IDQRCode" />
+            </Principal>
+            <Dependent Role="WalletItem">
+              <PropertyRef Name="QRCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="oicartim04dbModelStoreContainer">
+          <EntitySet Name="AccomodationItem" EntityType="Self.AccomodationItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GeoLocation" EntityType="Self.GeoLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PopularLocationItem" EntityType="Self.PopularLocationItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRCode" EntityType="Self.QRCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WalletItem" EntityType="Self.WalletItem" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccomodationItem_QRCode" Association="Self.FK_AccomodationItem_QRCode">
+            <End Role="QRCode" EntitySet="QRCode" />
+            <End Role="AccomodationItem" EntitySet="AccomodationItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Geo_City" Association="Self.FK_Geo_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="GeoLocation" EntitySet="GeoLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pitcure_AccomodationItem" Association="Self.FK_Pitcure_AccomodationItem">
+            <End Role="AccomodationItem" EntitySet="AccomodationItem" />
+            <End Role="Picture" EntitySet="Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pitcure_PopularLocationItem" Association="Self.FK_Pitcure_PopularLocationItem">
+            <End Role="PopularLocationItem" EntitySet="PopularLocationItem" />
+            <End Role="Picture" EntitySet="Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pitcure_WalletItem" Association="Self.FK_Pitcure_WalletItem">
+            <End Role="WalletItem" EntitySet="WalletItem" />
+            <End Role="Picture" EntitySet="Picture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PopularLocationItem_GeoLocation" Association="Self.FK_PopularLocationItem_GeoLocation">
+            <End Role="GeoLocation" EntitySet="GeoLocation" />
+            <End Role="PopularLocationItem" EntitySet="PopularLocationItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PopularLocationItem_QRCode" Association="Self.FK_PopularLocationItem_QRCode">
+            <End Role="QRCode" EntitySet="QRCode" />
+            <End Role="PopularLocationItem" EntitySet="PopularLocationItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRCode_City" Association="Self.FK_QRCode_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="QRCode" EntitySet="QRCode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRCode_User" Association="Self.FK_QRCode_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="QRCode" EntitySet="QRCode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WalletItem_QRCode" Association="Self.FK_WalletItem_QRCode">
+            <End Role="QRCode" EntitySet="QRCode" />
+            <End Role="WalletItem" EntitySet="WalletItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="oicartim04dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccomodationItem">
+          <Key>
+            <PropertyRef Name="IDAccomodationItem" />
+          </Key>
+          <Property Name="IDAccomodationItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="QRCodeID" Type="Int32" />
+          <NavigationProperty Name="QRCode" Relationship="Self.FK_AccomodationItem_QRCode" FromRole="AccomodationItem" ToRole="QRCode" />
+          <NavigationProperty Name="Pictures" Relationship="Self.FK_Pitcure_AccomodationItem" FromRole="AccomodationItem" ToRole="Picture" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="IDCity" />
+          </Key>
+          <Property Name="IDCity" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GeoLocations" Relationship="Self.FK_Geo_City" FromRole="City" ToRole="GeoLocation" />
+          <NavigationProperty Name="QRCodes" Relationship="Self.FK_QRCode_City" FromRole="City" ToRole="QRCode" />
+        </EntityType>
+        <EntityType Name="GeoLocation">
+          <Key>
+            <PropertyRef Name="IDGeoLocation" />
+          </Key>
+          <Property Name="IDGeoLocation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PositionX" Type="Decimal" Precision="14" Scale="12" Nullable="false" />
+          <Property Name="PositionY" Type="Decimal" Precision="17" Scale="15" Nullable="false" />
+          <Property Name="CityID" Type="Int32" />
+          <NavigationProperty Name="City" Relationship="Self.FK_Geo_City" FromRole="GeoLocation" ToRole="City" />
+          <NavigationProperty Name="PopularLocationItems" Relationship="Self.FK_PopularLocationItem_GeoLocation" FromRole="GeoLocation" ToRole="PopularLocationItem" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="IDPicture" />
+          </Key>
+          <Property Name="IDPicture" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContentType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="true" />
+          <Property Name="PicturePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccomodationID" Type="Int32" Nullable="true" />
+          <Property Name="PopularLocationID" Type="Int32" Nullable="true" />
+          <Property Name="WalletID" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="AccomodationItem" Relationship="Self.FK_Pitcure_AccomodationItem" FromRole="Picture" ToRole="AccomodationItem" />
+          <NavigationProperty Name="PopularLocationItem" Relationship="Self.FK_Pitcure_PopularLocationItem" FromRole="Picture" ToRole="PopularLocationItem" />
+          <NavigationProperty Name="WalletItem" Relationship="Self.FK_Pitcure_WalletItem" FromRole="Picture" ToRole="WalletItem" />
+        </EntityType>
+        <EntityType Name="PopularLocationItem">
+          <Key>
+            <PropertyRef Name="IDPopularLocationItem" />
+          </Key>
+          <Property Name="IDPopularLocationItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="GeoLocationID" Type="Int32" />
+          <Property Name="QRCodeID" Type="Int32" />
+          <NavigationProperty Name="GeoLocation" Relationship="Self.FK_PopularLocationItem_GeoLocation" FromRole="PopularLocationItem" ToRole="GeoLocation" />
+          <NavigationProperty Name="Pictures" Relationship="Self.FK_Pitcure_PopularLocationItem" FromRole="PopularLocationItem" ToRole="Picture" />
+          <NavigationProperty Name="QRCode" Relationship="Self.FK_PopularLocationItem_QRCode" FromRole="PopularLocationItem" ToRole="QRCode" />
+          <Property Name="IsVisited" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRCode">
+          <Key>
+            <PropertyRef Name="IDQRCode" />
+          </Key>
+          <Property Name="IDQRCode" Type="Int32" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <NavigationProperty Name="AccomodationItems" Relationship="Self.FK_AccomodationItem_QRCode" FromRole="QRCode" ToRole="AccomodationItem" />
+          <NavigationProperty Name="City" Relationship="Self.FK_QRCode_City" FromRole="QRCode" ToRole="City" />
+          <NavigationProperty Name="PopularLocationItems" Relationship="Self.FK_PopularLocationItem_QRCode" FromRole="QRCode" ToRole="PopularLocationItem" />
+          <NavigationProperty Name="User" Relationship="Self.FK_QRCode_User" FromRole="QRCode" ToRole="User" />
+          <NavigationProperty Name="WalletItems" Relationship="Self.FK_WalletItem_QRCode" FromRole="QRCode" ToRole="WalletItem" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pass" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="QRCodes" Relationship="Self.FK_QRCode_User" FromRole="User" ToRole="QRCode" />
+        </EntityType>
+        <EntityType Name="WalletItem">
+          <Key>
+            <PropertyRef Name="IDWalletItem" />
+          </Key>
+          <Property Name="IDWalletItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="QRCodeID" Type="Int32" />
+          <NavigationProperty Name="Pictures" Relationship="Self.FK_Pitcure_WalletItem" FromRole="WalletItem" ToRole="Picture" />
+          <NavigationProperty Name="QRCode" Relationship="Self.FK_WalletItem_QRCode" FromRole="WalletItem" ToRole="QRCode" />
+        </EntityType>
+        <Association Name="FK_AccomodationItem_QRCode">
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="0..1" />
+          <End Role="AccomodationItem" Type="Self.AccomodationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRCode">
+              <PropertyRef Name="IDQRCode" />
+            </Principal>
+            <Dependent Role="AccomodationItem">
+              <PropertyRef Name="QRCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pitcure_AccomodationItem">
+          <End Role="AccomodationItem" Type="Self.AccomodationItem" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccomodationItem">
+              <PropertyRef Name="IDAccomodationItem" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="AccomodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Geo_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="GeoLocation" Type="Self.GeoLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="IDCity" />
+            </Principal>
+            <Dependent Role="GeoLocation">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRCode_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="IDCity" />
+            </Principal>
+            <Dependent Role="QRCode">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PopularLocationItem_GeoLocation">
+          <End Role="GeoLocation" Type="Self.GeoLocation" Multiplicity="0..1" />
+          <End Role="PopularLocationItem" Type="Self.PopularLocationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeoLocation">
+              <PropertyRef Name="IDGeoLocation" />
+            </Principal>
+            <Dependent Role="PopularLocationItem">
+              <PropertyRef Name="GeoLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pitcure_PopularLocationItem">
+          <End Role="PopularLocationItem" Type="Self.PopularLocationItem" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PopularLocationItem">
+              <PropertyRef Name="IDPopularLocationItem" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="PopularLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pitcure_WalletItem">
+          <End Role="WalletItem" Type="Self.WalletItem" Multiplicity="0..1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WalletItem">
+              <PropertyRef Name="IDWalletItem" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="WalletID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PopularLocationItem_QRCode">
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="0..1" />
+          <End Role="PopularLocationItem" Type="Self.PopularLocationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRCode">
+              <PropertyRef Name="IDQRCode" />
+            </Principal>
+            <Dependent Role="PopularLocationItem">
+              <PropertyRef Name="QRCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRCode_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="QRCode">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WalletItem_QRCode">
+          <End Role="QRCode" Type="Self.QRCode" Multiplicity="0..1" />
+          <End Role="WalletItem" Type="Self.WalletItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRCode">
+              <PropertyRef Name="IDQRCode" />
+            </Principal>
+            <Dependent Role="WalletItem">
+              <PropertyRef Name="QRCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="oicartim04dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccomodationItems" EntityType="Self.AccomodationItem" />
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="GeoLocations" EntityType="Self.GeoLocation" />
+          <EntitySet Name="Pictures" EntityType="Self.Picture" />
+          <EntitySet Name="PopularLocationItems" EntityType="Self.PopularLocationItem" />
+          <EntitySet Name="QRCodes" EntityType="Self.QRCode" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="WalletItems" EntityType="Self.WalletItem" />
+          <AssociationSet Name="FK_AccomodationItem_QRCode" Association="Self.FK_AccomodationItem_QRCode">
+            <End Role="QRCode" EntitySet="QRCodes" />
+            <End Role="AccomodationItem" EntitySet="AccomodationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pitcure_AccomodationItem" Association="Self.FK_Pitcure_AccomodationItem">
+            <End Role="AccomodationItem" EntitySet="AccomodationItems" />
+            <End Role="Picture" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Geo_City" Association="Self.FK_Geo_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="GeoLocation" EntitySet="GeoLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRCode_City" Association="Self.FK_QRCode_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="QRCode" EntitySet="QRCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PopularLocationItem_GeoLocation" Association="Self.FK_PopularLocationItem_GeoLocation">
+            <End Role="GeoLocation" EntitySet="GeoLocations" />
+            <End Role="PopularLocationItem" EntitySet="PopularLocationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pitcure_PopularLocationItem" Association="Self.FK_Pitcure_PopularLocationItem">
+            <End Role="PopularLocationItem" EntitySet="PopularLocationItems" />
+            <End Role="Picture" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pitcure_WalletItem" Association="Self.FK_Pitcure_WalletItem">
+            <End Role="WalletItem" EntitySet="WalletItems" />
+            <End Role="Picture" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PopularLocationItem_QRCode" Association="Self.FK_PopularLocationItem_QRCode">
+            <End Role="QRCode" EntitySet="QRCodes" />
+            <End Role="PopularLocationItem" EntitySet="PopularLocationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRCode_User" Association="Self.FK_QRCode_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="QRCode" EntitySet="QRCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WalletItem_QRCode" Association="Self.FK_WalletItem_QRCode">
+            <End Role="QRCode" EntitySet="QRCodes" />
+            <End Role="WalletItem" EntitySet="WalletItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="oicartim04dbModelStoreContainer" CdmEntityContainer="oicartim04dbEntities">
+          <EntitySetMapping Name="AccomodationItems">
+            <EntityTypeMapping TypeName="oicartim04dbModel.AccomodationItem">
+              <MappingFragment StoreEntitySet="AccomodationItem">
+                <ScalarProperty Name="IDAccomodationItem" ColumnName="IDAccomodationItem" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="QRCodeID" ColumnName="QRCodeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="oicartim04dbModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="IDCity" ColumnName="IDCity" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeoLocations">
+            <EntityTypeMapping TypeName="oicartim04dbModel.GeoLocation">
+              <MappingFragment StoreEntitySet="GeoLocation">
+                <ScalarProperty Name="IDGeoLocation" ColumnName="IDGeoLocation" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PositionX" ColumnName="PositionX" />
+                <ScalarProperty Name="PositionY" ColumnName="PositionY" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pictures">
+            <EntityTypeMapping TypeName="oicartim04dbModel.Picture">
+              <MappingFragment StoreEntitySet="Picture">
+                <ScalarProperty Name="IDPicture" ColumnName="IDPicture" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="PicturePath" ColumnName="PicturePath" />
+                <ScalarProperty Name="AccomodationID" ColumnName="AccomodationID" />
+                <ScalarProperty Name="PopularLocationID" ColumnName="PopularLocationID" />
+                <ScalarProperty Name="WalletID" ColumnName="WalletID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PopularLocationItems">
+            <EntityTypeMapping TypeName="oicartim04dbModel.PopularLocationItem">
+              <MappingFragment StoreEntitySet="PopularLocationItem">
+                <ScalarProperty Name="IsVisited" ColumnName="IsVisited" />
+                <ScalarProperty Name="IDPopularLocationItem" ColumnName="IDPopularLocationItem" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="GeoLocationID" ColumnName="GeoLocationID" />
+                <ScalarProperty Name="QRCodeID" ColumnName="QRCodeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRCodes">
+            <EntityTypeMapping TypeName="oicartim04dbModel.QRCode">
+              <MappingFragment StoreEntitySet="QRCode">
+                <ScalarProperty Name="IDQRCode" ColumnName="IDQRCode" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="oicartim04dbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WalletItems">
+            <EntityTypeMapping TypeName="oicartim04dbModel.WalletItem">
+              <MappingFragment StoreEntitySet="WalletItem">
+                <ScalarProperty Name="IDWalletItem" ColumnName="IDWalletItem" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="QRCodeID" ColumnName="QRCodeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,82 @@
+﻿@inject AppState AppState
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">eSouvenirWebApp</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+
+        @if (AppState.LoggedIn == false)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="login">
+                    <span class="oi oi-account-login" aria-hidden="true"></span> Login
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link disabled" href="userDetails">
+                    <span class="oi oi-people" aria-hidden="true"></span> Users
+                </NavLink>
+            </li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link disabled" href="userStatistics">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Users statistics
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link disabled" href="cityStatistics">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> City statistics
+                </NavLink>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link disabled" href="login">
+                    <span class="oi oi-account-login" aria-hidden="true"></span> Login
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="userDetails">
+                    <span class="oi oi-people" aria-hidden="true"></span> Users
+                </NavLink>
+            </li>
+
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="userStatistics">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Users statistics
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="cityStatistics">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> City statistics
+                </NavLink>
+            </li>
+        }
+
+
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += StateHasChanged;
+    }
+
+
+}

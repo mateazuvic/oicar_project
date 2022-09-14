@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".AccommodationEdit">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Accommodation"
+            android:textSize="45sp"
+            android:textAlignment="center"
+            android:padding="15dp"
+            android:fontFamily="@font/header_font_family"
+            android:background="#658fad"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="78dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Name of the place where you stayed:"
+                android:textColor="#8e9aa3"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="5"
+                android:layout_marginLeft="20dp"
+                android:backgroundTintMode="src_over"
+                android:backgroundTint="#658fad"
+                android:textColor="@color/black"
+                android:scrollHorizontally="true"
+                android:maxLines="1"
+                tools:text="Hotel Ibiza" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Link on website:"
+                android:textColor="#8e9aa3"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etLink"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_marginLeft="20dp"
+                android:scrollHorizontally="true"
+                android:maxLines="1"
+                android:linksClickable="true"
+                android:autoLink="web"
+                android:textColor="#658fad"
+                android:textColorLink="#658fad"
+                android:backgroundTintMode="add"
+                android:backgroundTint="#658fad"
+                android:gravity="start"
+                tools:text="https://www.booking.com/hotel/es/the-standard-ibiza.hr.html?aid=356980&amp;label=gog235jc-1DCAYoRjhySBBYA2hliAEBmAEQuAEXyAEM2AED6AEB-AECiAIBqAIDuALt0-eUBsACAdICJGNjNDNjNmQwLWZiZTAtNGYzOS04MTBiLTM2ODc0YjY0MGEzY9gCBOACAQ&amp;sid=9350cb987b4bcc5362cfab798d6a0fbb&amp;all_sr_blocks=802964504_341617163_2_2_0;checkin=2022-10-13;checkout=2022-10-16;dest_id=1408;dest_type=region;dist=0;group_adults=2;group_children=0;hapos=6;highlighted_blocks=802964504_341617163_2_2_0;hpos=6;matching_block_id=802964504_341617163_2_2_0;no_rooms=1;req_adults=2;req_children=0;room1=A%2CA;sb_price_type=total;sr_order=popularity;sr_pri_blocks=802964504_341617163_2_2_0__80845;srepoch=1654254077;srpvid=27c04d7d5e4d012d;type=total;ucfs=1&amp;#hotelTmpl" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:text="Your description and impressions:"
+                android:textColor="#8e9aa3"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etDesc"
+                android:layout_width="290dp"
+                android:layout_height="160dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:gravity="top"
+                android:background="#cccdf0"
+                android:src="@drawable/success"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/picture" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="29sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="240dp"
+            android:layout_marginTop="25dp"
+            android:letterSpacing="0"
+            android:fontFamily="@font/beach_charm"
+            android:backgroundTint="#466378"
+            android:text="Save" />
+
+    </LinearLayout>
+
+</ScrollView>

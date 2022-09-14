@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Wallet item"
+            android:textSize="45sp"
+            android:textAlignment="center"
+            android:padding="15dp"
+            android:fontFamily="@font/header_font_family"
+            android:background="#aabf9f"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:text="Name of the place:"
+                android:textColor="#8e9aa3"
+                android:textStyle="bold" />
+
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="380dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:backgroundTintMode="src_over"
+            android:backgroundTint="#618050"
+            android:textColor="@color/black"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            tools:text="Restaurant Matea" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:text="Your description and impressions:"
+                android:textColor="#8e9aa3"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etDesc"
+                android:layout_width="290dp"
+                android:layout_height="160dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:gravity="top"
+                android:background="#9cc9f0"
+                android:src="@drawable/success"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:textSize="18sp"
+                android:text="Price:"
+                android:textColor="#8e9aa3"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPrice"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:scrollHorizontally="true"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:backgroundTintMode="add"
+                android:backgroundTint="#618050"
+                android:gravity="center"
+                android:drawableEnd="@drawable/euros"
+                android:hint="0.00" />
+
+            <TextView
+                android:layout_width="170dp"
+                android:layout_height="30dp"
+                android:textSize="18sp"
+                android:text="(e.g. 20 or 20.45)"
+                android:textColor="#d6d6d4"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/picture" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="29sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="240dp"
+            android:layout_marginTop="25dp"
+            android:letterSpacing="0"
+            android:fontFamily="@font/beach_charm"
+            android:backgroundTint="#687861"
+            android:text="Save" />
+
+    </LinearLayout>
+
+</ScrollView>

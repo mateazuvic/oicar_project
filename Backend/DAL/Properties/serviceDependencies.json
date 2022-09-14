@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "Server=tcp:oicartim04dbserver.database.windows.net,1433;InitialCatalog=oicartim04db;PersistSecurityInfo=False;UserID=matea;Password=OvoJeJak0DobarPa$$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;"
+    }
+  }
+}
